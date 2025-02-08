@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Portfolio</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            animation: glow 1.5s infinite alternate;
+            margin-bottom: 20px;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.7); }
+        }
+        .hacker-intro {
+            font-size: 1.5em;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            animation: hackerEffect 2s infinite alternate;
+        }
+        @keyframes hackerEffect {
+            from { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+            to { text-shadow: 0 0 15px #00ff00, 0 0 20px #00ff00; }
+        }
+        .hacker-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            margin-bottom: 20px;
+        }
+        .matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: -1;
+            overflow: hidden;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #00ff00, #008000);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transition: 0.3s;
+            font-size: 1.2em;
+        }
+        a:hover {
+            background: linear-gradient(135deg, #008000, #00ff00);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .hacker-intro {
+                font-size: 1.2em;
+            }
+            .hacker-photo {
+                width: 120px;
+                height: 120px;
+            }
+            a {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+    <h1>Welcome to My Portfolio</h1>
+    <img src="123.jpeg" alt="Photo" class="hacker-photo">
+    <p class="hacker-intro">"Access Granted... Welcome to the Cyber Realm."</p>
+    <p style="color: blue;">Explore my work, skills, and experiences. I specialize in creating modern, responsive, and user-friendly web applications.</p>
+    <a href="about.html">Enter</a>
+    <script>
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+        const letters = "010101010101010101".split("");
+        const fontSize = 14;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ff00";
+            ctx.font = `${fontSize}px monospace`;
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+    </script>
+</body>
+</html>
